@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <title>Restaurant</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Restaurant finder</h1>
+      </header>
+      <div class="filters">
+        <button id="filterBtn">&#9783; Filters</button>
+        <div id="filter-modal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Filters</h2>
+              <span class="close" id="closeBtn">&times;</span>
+            </div>
+            <div class="modal-body">
+              <div class="modal-left">
+                <div class="modal-priceRange active" id="price">
+                  <h3>Price Range</h3>
+                  <p id="price-text"></p>
+                </div>
+                <div class="modal-capacityRange inactive" id="capacity">
+                  <h3>Capacity</h3>
+                  <p id="capacity-text"></p>
+                </div>
+                <div class="modal-workingHours inactive" id="hours">
+                  <h3>Working Hours</h3>
+                  <p id="hours-text"></p>
+                </div>
+                <div class="modal-cuisines inactive" id="cuisines">
+                  <h3>Cuisines</h3>
+                  <p id="cuisines-text"></p>
+                </div>
+              </div>
+              <div class="modal-right">
+                <div class="modal-right-price" id="price-input">
+                  <form id="price-form">
+                    <ul>
+                      <li>
+                        <input type="radio" name="price" value="Expensive" />
+                        <span>Expensive</span>
+                      </li>
+                      <li>
+                        <input type="radio" name="price" value="Moderate" />
+                        <span>Moderate</span>
+                      </li>
+                      <li>
+                        <input type="radio" name="price" value="Cheap" />
+                        <span>Cheap</span>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+                <div class="modal-right-capacity hide" id="capacity-input">
+                  <form id="capacity-form">
+                    <ul>
+                      <li>
+                        <input type="radio" name="capacity" value="Small" />
+                        <span>Small</span>
+                      </li>
+                      <li>
+                        <input type="radio" name="capacity" value="Medium" />
+                        <span>Medium</span>
+                      </li>
+                      <li>
+                        <input type="radio" name="capacity" value="Large" />
+                        <span>Large</span>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+                <div class="modal-right-hours hide" id="hours-input">
+                  <form id="hours-form">
+                    <input
+                      class="btn"
+                      value="Open Now"
+                      name="hours"
+                      type="button"
+                    />
+                    <select class="btn" id="hours" name="hours">
+                      <option value="" selected>Choose</option>
+                      <option value="6">06:00</option>
+                      <option value="7">07:00</option>
+                      <option value="8">08:00</option>
+                      <option value="9">09:00</option>
+                      <option value="10">10:00</option>
+                      <option value="11">11:00</option>
+                      <option value="12">12:00</option>
+                      <option value="12">12:00</option>
+                      <option value="13">13:00</option>
+                      <option value="14">14:00</option>
+                      <option value="15">15:00</option>
+                      <option value="16">16:00</option>
+                      <option value="17">17:00</option>
+                      <option value="18">18:00</option>
+                      <option value="19">19:00</option>
+                      <option value="20">20:00</option>
+                      <option value="21">21:00</option>
+                      <option value="22">22:00</option>
+                      <option value="23">23:00</option>
+                      <option value="24">24:00</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="modal-right-cuisines hide" id="cuisines-input">
+                  <form id="cuisines-form">
+                    <ul>
+                      <li>
+                        <input
+                          type="checkbox"
+                          name="cuisines"
+                          value="Serbian"
+                        />
+                        <span>Serbian</span>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          name="cuisines"
+                          value="Italian"
+                        />
+                        <span>Italian</span>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          name="cuisines"
+                          value="Mexican"
+                        />
+                        <span>Mexican</span>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          name="cuisines"
+                          value="Chinese"
+                        />
+                        <span>Chinese</span>
+                      </li>
+                      <li>
+                        <input type="checkbox" name="cuisines" value="Vege" />
+                        <span>Vege</span>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="footerBtn" id="submit">Apply</button>
+              <button class="footerBtn" id="clear">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="restaurants" id="rest"></div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

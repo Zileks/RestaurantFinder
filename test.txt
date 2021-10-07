@@ -1,0 +1,86 @@
+// MenuGo();
+// function findLowPriceRestaurants() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (
+//       restaurants[i].avgPrice <=
+//       priceRanges.find((x) => x.tooltip === "LowPrice").maxPrice
+//     )
+//       arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+
+// function findMediumPriceRestaurants() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (
+//       restaurants[i].avgPrice <=
+//         priceRanges.find((x) => x.tooltip === "MediumPrice").maxPrice &&
+//       restaurants[i].avgPrice >=
+//         priceRanges.find((x) => x.tooltip === "MediumPrice").minPrice
+//     )
+//       arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+
+// function findHighPriceRestaurants() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].avgPrice > 200) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+
+// function findSmallSizedRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].tablesNum <= 10) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+// function findMediumSizedRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].tablesNum > 10 && restaurants[i].tablesNum <= 20)
+//       arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+// function findLargeSizedRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].tablesNum > 20) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+
+// function findSerbianFoodRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].categories.includes("serbian")) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+// function findMexicanFoodRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].categories.includes("mexican")) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+// function findChineseFoodRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].categories.includes("chinese")) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
+// function findItalianFoodRestaurant() {
+//   let arr = [];
+//   for (let i = 0; i < restaurants.length; i++) {
+//     if (restaurants[i].categories.includes("italian")) arr.push(restaurants[i]);
+//   }
+//   return arr;
+// }
