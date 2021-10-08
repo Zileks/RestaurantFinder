@@ -174,7 +174,7 @@ function findAllRestaurants(restaurants) {
 function findRestaurantsByFood(restaurants, ...food) {
   let arr = [];
   for (let i = 0; i < restaurants.length; i++) {
-    if (food.every((x) => restaurants[i].categories.includes(x)))
+    if (food.some((x) => restaurants[i].categories.includes(x)))
       arr.push(restaurants[i]);
   }
   return arr;
@@ -340,6 +340,8 @@ const filterByCapacity = () => {
 const filterByHours = () => {
   let filter;
   let result = [];
+  let hoursWithoutZero = 2;
+  let hoursWithZero = 1;
   const hours = document.getElementById('hours-text');
 
   if (!hours.textContent) {
@@ -349,8 +351,8 @@ const filterByHours = () => {
   } else
     filter =
       hours.textContent.length === 4
-        ? hours.textContent.slice(0, 1)
-        : hours.textContent.slice(0, 2);
+        ? hours.textContent.slice(0, hoursWithZero)
+        : hours.textContent.slice(0, hoursWithoutZero);
   result = findOpenRestaurantsAt(restaurants, filter);
 
   return result;
@@ -359,15 +361,17 @@ const filterByHours = () => {
 const filterByCuisines = () => {
   let filter = [];
   let result = [];
+  let allCuisnes = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
   const cuisines = document.getElementsByName('cuisines');
   for (let i = 0; i < cuisines.length; i++) {
     if (cuisines[i].checked) {
       filter.push(cuisines[i].value);
     }
   }
-  if (!filter) return result;
+  if (filter.length === 0) {
+    filter = allCuisnes;
+  }
   result = findRestaurantsByFood(restaurants, ...filter);
-
   return result;
 };
 
@@ -410,7 +414,7 @@ const onSubmit = (restaurants) => {
       filterByHours().includes(x) &&
       filterByPrice().includes(x)
   );
-  console.log(filteredArray);
+
   hideRestaurants();
   showRestaurants(filteredArray);
   document.getElementById('filter-modal').style.display = 'none';
