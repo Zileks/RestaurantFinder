@@ -12,6 +12,27 @@
 
 // Kada korisnik unosi vrednosti treba obezbediti da je moguć unos samo ispravnih vrednosti
 // (i to smo već radili kod kalkulatora)
+function createRestaurant(
+  name,
+  adress,
+  avgPrice,
+  capacity,
+  categories,
+  openTime,
+  closeTime,
+  image
+) {
+  return {
+    name,
+    adress,
+    avgPrice,
+    capacity,
+    categories,
+    openTime,
+    closeTime,
+    image,
+  };
+}
 const restaurant1 = createRestaurant(
   'Bon apetit',
   'Rome street 24',
@@ -84,28 +105,6 @@ const restaurant7 = createRestaurant(
   '/assets/ship.jpg'
 );
 
-function createRestaurant(
-  name,
-  adress,
-  avgPrice,
-  capacity,
-  categories,
-  openTime,
-  closeTime,
-  image
-) {
-  return {
-    name,
-    adress,
-    avgPrice,
-    capacity,
-    categories,
-    openTime,
-    closeTime,
-    image,
-  };
-}
-
 let restaurants = [
   restaurant1,
   restaurant2,
@@ -175,6 +174,15 @@ function findRestaurantsByFood(restaurants, ...food) {
   let arr = [];
   for (let i = 0; i < restaurants.length; i++) {
     if (food.some((x) => restaurants[i].categories.includes(x)))
+      arr.push(restaurants[i]);
+  }
+  return arr;
+}
+
+function findRestaurantsByFoodEvery(restaurants, ...food) {
+  let arr = [];
+  for (let i = 0; i < restaurants.length; i++) {
+    if (food.every((x) => restaurants[i].categories.includes(x)))
       arr.push(restaurants[i]);
   }
   return arr;
@@ -318,7 +326,7 @@ const filterByPrice = () => {
   return result;
 };
 
-const filterByCapacity = () => {
+const filterByCapacity = (i) => {
   let filter;
   let result = [];
   let capacityRange;
@@ -329,15 +337,15 @@ const filterByCapacity = () => {
     }
   }
   if (!filter) {
-    return (result = findAllRestaurants(restaurants));
+    return (result = findAllRestaurants(i));
   }
   capacityRange = chooseCapacityRange(filter);
-  result = findRestaurantsByCapacity(restaurants, capacityRange);
+  result = findRestaurantsByCapacity(i, capacityRange);
 
   return result;
 };
 
-const filterByHours = () => {
+const filterByHours = (i) => {
   let filter;
   let result = [];
   let hoursWithoutZero = 2;
@@ -345,24 +353,27 @@ const filterByHours = () => {
   const hours = document.getElementById('hours-text');
 
   if (!hours.textContent) {
-    return (result = findAllRestaurants(restaurants));
+    return (result = findAllRestaurants(i));
   } else if (hours.textContent === 'Open Now') {
-    return (result = findOpenRestaurants(restaurants));
+    return (result = findOpenRestaurants(i));
   } else
     filter =
       hours.textContent.length === 4
         ? hours.textContent.slice(0, hoursWithZero)
         : hours.textContent.slice(0, hoursWithoutZero);
-  result = findOpenRestaurantsAt(restaurants, filter);
+  result = findOpenRestaurantsAt(i, filter);
 
   return result;
 };
 
-const filterByCuisines = () => {
+const filterByCuisines = (i) => {
   let filter = [];
   let result = [];
   let allCuisnes = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
+  let every = document.getElementById('radio_every');
+  let some = document.getElementById('radio_some');
   const cuisines = document.getElementsByName('cuisines');
+
   for (let i = 0; i < cuisines.length; i++) {
     if (cuisines[i].checked) {
       filter.push(cuisines[i].value);
@@ -371,11 +382,19 @@ const filterByCuisines = () => {
   if (filter.length === 0) {
     filter = allCuisnes;
   }
-  result = findRestaurantsByFood(restaurants, ...filter);
+  console.log(some.checked, every.checked);
+  if (some.checked) {
+    result = findRestaurantsByFood(i, ...filter);
+  }
+  if (every.checked) {
+    result = findRestaurantsByFoodEvery(i, ...filter);
+  }
+  console.log(result);
+
   return result;
 };
 
-const showRestaurants = (restaurants) => {
+const createCard = (restaurants) => {
   const cards = restaurants
     .map((x) => {
       return `
@@ -393,7 +412,7 @@ const showRestaurants = (restaurants) => {
   document.getElementById('rest').insertAdjacentHTML('afterbegin', cards);
 };
 
-showRestaurants(restaurants);
+createCard(restaurants);
 
 function hideRestaurants() {
   const elements = document.getElementsByClassName('card_container');
@@ -402,21 +421,26 @@ function hideRestaurants() {
   }
 }
 
-const onSubmit = (restaurants) => {
-  filterByCapacity();
-  filterByCuisines();
-  filterByHours();
-  filterByPrice();
-  let filteredArray = restaurants.filter(
-    (x) =>
-      filterByCapacity().includes(x) &&
-      filterByCuisines().includes(x) &&
-      filterByHours().includes(x) &&
-      filterByPrice().includes(x)
+const onSubmit = () => {
+  // let filteredArray = restaurants.filter(
+  //   (x) =>
+  //     filterByCapacity().includes(x) &&
+  //     filterByCuisines().includes(x) &&
+  //     filterByHours().includes(x) &&
+  //     filterByPrice().includes(x)
+  // );
+
+  // filterByCapacity(filterByCuisines(filterByHours(filterByPrice(allRest))))
+  //sukcesivno filtriranje
+
+  let filteredArray = filterByCuisines(
+    filterByHours(filterByCapacity(filterByPrice()))
   );
 
+  console.log(filterByPrice());
+
   hideRestaurants();
-  showRestaurants(filteredArray);
+  createCard(filteredArray);
   document.getElementById('filter-modal').style.display = 'none';
 };
 
@@ -443,6 +467,9 @@ const clearAll = () => {
     }
     document.getElementById('hours-text').innerText = result;
     document.getElementById('cuisines-text').innerText = result;
+    document.getElementById('cuisines-allorany').innerText = result;
+    document.getElementById('radio_every').checked = false;
+    document.getElementById('radio_some').checked = true;
     let cuisines = document.getElementsByName('cuisines');
     for (let i = 0; i < cuisines.length; i++) {
       if (cuisines[i].checked) cuisines[i].checked = false;
@@ -477,9 +504,17 @@ const filterText = () => {
   document.getElementById('cuisines-form').addEventListener('change', (e) => {
     let arr = [];
     let cuisines = document.getElementsByName('cuisines');
+    let every = document.getElementById('radio_every');
+    let some = document.getElementById('radio_some');
     for (let i = 0; i < cuisines.length; i++) {
       if (cuisines[i].checked) arr.push(cuisines[i].value);
     }
+    every.checked
+      ? (document.getElementById(
+          'cuisines-allorany'
+        ).innerText = `Filter by All`)
+      : (document.getElementById('cuisines-allorany').innerText =
+          'Filter by Any');
     result = arr.length;
     result
       ? (document.getElementById(
@@ -492,3 +527,5 @@ const filterText = () => {
 filterText();
 stylingFunction();
 modal();
+
+console.log(filterByPrice());
