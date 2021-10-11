@@ -1,7 +1,6 @@
 {
   "name": "restoran",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,10 +10,11 @@
     "url": "git+https://github.com/Zileks/RestaurantFinder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "zile",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Zileks/RestaurantFinder/issues"
   },
-  "homepage": "https://github.com/Zileks/RestaurantFinder#readme"
+  "homepage": "https://github.com/Zileks/RestaurantFinder#readme",
+  "description": ""
 }
