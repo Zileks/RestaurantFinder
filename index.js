@@ -370,8 +370,7 @@ const filterByCuisines = (i) => {
   let filter = [];
   let result = [];
   let allCuisnes = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
-  let every = document.getElementById('radio_every');
-  let some = document.getElementById('radio_some');
+
   const cuisines = document.getElementsByName('cuisines');
 
   for (let i = 0; i < cuisines.length; i++) {
@@ -382,13 +381,8 @@ const filterByCuisines = (i) => {
   if (filter.length === 0) {
     filter = allCuisnes;
   }
-  console.log(some.checked, every.checked);
-  if (some.checked) {
-    result = findRestaurantsByFood(i, ...filter);
-  }
-  if (every.checked) {
-    result = findRestaurantsByFoodEvery(i, ...filter);
-  }
+  result = findRestaurantsByFood(i, ...filter);
+
   console.log(result);
 
   return result;
@@ -467,9 +461,6 @@ const clearAll = () => {
     }
     document.getElementById('hours-text').innerText = result;
     document.getElementById('cuisines-text').innerText = result;
-    document.getElementById('cuisines-allorany').innerText = result;
-    document.getElementById('radio_every').checked = false;
-    document.getElementById('radio_some').checked = true;
     let cuisines = document.getElementsByName('cuisines');
     for (let i = 0; i < cuisines.length; i++) {
       if (cuisines[i].checked) cuisines[i].checked = false;
@@ -504,17 +495,9 @@ const filterText = () => {
   document.getElementById('cuisines-form').addEventListener('change', (e) => {
     let arr = [];
     let cuisines = document.getElementsByName('cuisines');
-    let every = document.getElementById('radio_every');
-    let some = document.getElementById('radio_some');
     for (let i = 0; i < cuisines.length; i++) {
       if (cuisines[i].checked) arr.push(cuisines[i].value);
     }
-    every.checked
-      ? (document.getElementById(
-          'cuisines-allorany'
-        ).innerText = `Filter by All`)
-      : (document.getElementById('cuisines-allorany').innerText =
-          'Filter by Any');
     result = arr.length;
     result
       ? (document.getElementById(
