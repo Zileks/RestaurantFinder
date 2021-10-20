@@ -1,0 +1,74 @@
+{
+  "restaurants": [
+    {
+      "name": "Bon Apetit",
+      "address": "Rome street 24",
+      "avgPrice": 68,
+      "capacity": 10,
+      "categories": ["Italian", "Mexican"],
+      "openTime": 8,
+      "closeTime": 22,
+      "image": "/assets/italian.jpg"
+    },
+    {
+      "name": "El Ranchito",
+      "address": "Mexico street 89",
+      "avgPrice": 202,
+      "capacity": 20,
+      "categories": ["Mexican", "Vege"],
+      "openTime": 12,
+      "closeTime": 19,
+      "image": "/assets/spanish.jpg"
+    },
+    {
+      "name": "Petrus",
+      "address": "Novi Sad Miletic 95",
+      "avgPrice": 500,
+      "capacity": 22,
+      "categories": ["Italian", "Serbian", "Mexican"],
+      "openTime": 11,
+      "closeTime": 22,
+      "image": "/assets/petrus.jpg"
+    },
+    {
+      "name": "Panda",
+      "address": "Hoan Ho number 56",
+      "avgPrice": 159,
+      "capacity": 11,
+      "categories": ["Chinese", "Serbian"],
+      "openTime": 6,
+      "closeTime": 18,
+      "image": "/assets/panda.jpg"
+    },
+    {
+      "name": "Trojka NS",
+      "address": "Detelinara number 99",
+      "avgPrice": 89,
+      "capacity": 40,
+      "categories": ["Serbian", "Vege"],
+      "openTime": 6,
+      "closeTime": 24,
+      "image": "/assets/trojka.jpg"
+    },
+    {
+      "name": "Orient Express",
+      "address": "BB",
+      "avgPrice": 456,
+      "capacity": 40,
+      "categories": ["Serbian", "Vege"],
+      "openTime": 6,
+      "closeTime": 24,
+      "image": "/assets/dragon.jpg"
+    },
+    {
+      "name": "Titanic",
+      "address": "Atlantic Ocean 56",
+      "avgPrice": 600,
+      "capacity": 50,
+      "categories": ["Vege", "Chinese", "Italian"],
+      "openTime": 6,
+      "closeTime": 24,
+      "image": "/assets/ship.jpg"
+    }
+  ]
+}
