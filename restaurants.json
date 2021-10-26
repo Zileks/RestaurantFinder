@@ -8,7 +8,7 @@
       "categories": ["Italian", "Mexican"],
       "openTime": 8,
       "closeTime": 22,
-      "image": "/assets/italian.jpg"
+      "image": "./assets/italian.jpg"
     },
     {
       "name": "El Ranchito",
@@ -18,7 +18,7 @@
       "categories": ["Mexican", "Vege"],
       "openTime": 12,
       "closeTime": 19,
-      "image": "/assets/spanish.jpg"
+      "image": "./assets/spanish.jpg"
     },
     {
       "name": "Petrus",
@@ -28,7 +28,7 @@
       "categories": ["Italian", "Serbian", "Mexican"],
       "openTime": 11,
       "closeTime": 22,
-      "image": "/assets/petrus.jpg"
+      "image": "./assets/petrus.jpg"
     },
     {
       "name": "Panda",
@@ -38,7 +38,7 @@
       "categories": ["Chinese", "Serbian"],
       "openTime": 6,
       "closeTime": 18,
-      "image": "/assets/panda.jpg"
+      "image": "./assets/panda.jpg"
     },
     {
       "name": "Trojka NS",
@@ -48,7 +48,7 @@
       "categories": ["Serbian", "Vege"],
       "openTime": 6,
       "closeTime": 24,
-      "image": "/assets/trojka.jpg"
+      "image": "./assets/trojka.jpg"
     },
     {
       "name": "Orient Express",
@@ -58,7 +58,7 @@
       "categories": ["Serbian", "Vege"],
       "openTime": 6,
       "closeTime": 24,
-      "image": "/assets/dragon.jpg"
+      "image": "./assets/dragon.jpg"
     },
     {
       "name": "Titanic",
@@ -68,7 +68,7 @@
       "categories": ["Vege", "Chinese", "Italian"],
       "openTime": 6,
       "closeTime": 24,
-      "image": "/assets/ship.jpg"
+      "image": "./assets/ship.jpg"
     }
   ]
 }

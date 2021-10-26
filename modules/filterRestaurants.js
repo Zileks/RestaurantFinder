@@ -1,4 +1,4 @@
-import * as find from './findRestaurants.js';
+import * as find from './restaurantFunctions.js';
 import { chooseCapacityRange, choosePriceRange } from './restaurantRange.js';
 
 const filterByPrice = (restaurants) => {

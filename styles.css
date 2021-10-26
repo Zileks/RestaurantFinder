@@ -286,9 +286,12 @@ h4 {
   margin-left: 50px;
 }
 
-.all-or-any h3 {
-}
-
 .all-or-any {
   padding-top: 100px;
+}
+
+#nono {
+  position: absolute;
+  left: 30%;
+  top: 40%;
 }

@@ -1,12 +1,11 @@
 import * as filter from './modules/filterRestaurants.js';
-import { hideRestaurants } from './modules/findRestaurants.js';
-
-const getRestaurants = () => {
-  return fetch('restaurants.json').then((res) => res.json());
-};
+import {
+  hideRestaurants,
+  fetchRestaurants,
+} from './modules/restaurantFunctions.js';
 
 const main = () => {
-  getRestaurants().then((res) => {
+  fetchRestaurants().then((res) => {
     let restaurants = [];
     let data = res.restaurants;
     for (let i = 0; i < data.length; i++) {
@@ -122,7 +121,14 @@ const main = () => {
         )
       );
       hideRestaurants();
-      createCard(filteredArray);
+      if (filteredArray.length !== 0) {
+        createCard(filteredArray);
+        document.getElementById('nono').innerText = '';
+      } else {
+        createCard(filteredArray);
+        document.getElementById('nono').innerText =
+          'There are no restaurants that fits your criteria';
+      }
       document.getElementById('filter-modal').style.display = 'none';
     };
 
@@ -152,6 +158,7 @@ const main = () => {
         document.getElementById('cuisines-allorany').innerText = result;
         document.getElementById('radio_every').checked = false;
         document.getElementById('radio_some').checked = true;
+        document.getElementById('nono').innerText = '';
         let cuisines = document.getElementsByName('cuisines');
         for (let i = 0; i < cuisines.length; i++) {
           if (cuisines[i].checked) cuisines[i].checked = false;

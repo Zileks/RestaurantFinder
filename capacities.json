@@ -1,0 +1,17 @@
+[
+  {
+    "tooltip": "Small",
+    "minCapacity": 0,
+    "maxCapacity": 10
+  },
+  {
+    "tooltip": "Medium",
+    "minCapacity": 11,
+    "maxCapacity": 20
+  },
+  {
+    "tooltip": "Large",
+    "minCapacity": 21,
+    "maxCapacity": 50000
+  }
+]

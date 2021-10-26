@@ -1,3 +1,7 @@
+const fetchRestaurants = () => {
+  return fetch('restaurants.json').then((res) => res.json());
+};
+
 function findAllRestaurants(restaurants) {
   return restaurants;
 }
@@ -66,6 +70,7 @@ function hideRestaurants() {
 }
 
 export {
+  fetchRestaurants,
   findAllRestaurants,
   findOpenRestaurants,
   findOpenRestaurantsAt,
