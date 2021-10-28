@@ -1,51 +1,36 @@
+import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
+
 function choosePriceRange(price) {
-  let priceRanges = [
-    { tooltip: 'Cheap', minPrice: 0, maxPrice: 100 },
-    { tooltip: 'Moderate', minPrice: 101, maxPrice: 200 },
-    { tooltip: 'Expensive', minPrice: 201, maxPrice: Infinity },
-  ];
+  return fetchPrices().then((result) => {
+    console.log(result);
+    switch (price) {
+      case 'Cheap':
+        return result[0];
 
-  switch (price) {
-    case 'Cheap':
-      return priceRanges[0];
-
-    case 'Moderate': {
-      return priceRanges[1];
+      case 'Moderate': {
+        return result[1];
+      }
+      case 'Expensive': {
+        return result[2];
+      }
     }
-    case 'Expensive': {
-      return priceRanges[2];
-    }
-  }
+  });
 }
+
 function chooseCapacityRange(capacity) {
-  let restaurantRanges = [
-    {
-      tooltip: 'Small',
-      minCapacity: 0,
-      maxCapacity: 10,
-    },
-    {
-      tooltip: 'Medium',
-      minCapacity: 11,
-      maxCapacity: 20,
-    },
-    {
-      tooltip: 'Large',
-      minCapacity: 21,
-      maxCapacity: Infinity,
-    },
-  ];
+  return fetchCapacities().then((result) => {
+    switch (capacity) {
+      case 'Small':
+        return result[0];
 
-  switch (capacity) {
-    case 'Small':
-      return restaurantRanges[0];
-
-    case 'Medium': {
-      return restaurantRanges[1];
+      case 'Medium': {
+        return result[1];
+      }
+      case 'Large': {
+        return result[2];
+      }
     }
-    case 'Large': {
-      return restaurantRanges[2];
-    }
-  }
+  });
 }
+
 export { chooseCapacityRange, choosePriceRange };

@@ -1,8 +1,6 @@
 import * as filter from './modules/filterRestaurants.js';
-import {
-  hideRestaurants,
-  fetchRestaurants,
-} from './modules/restaurantFunctions.js';
+import { hideRestaurants } from './modules/restaurantFunctions.js';
+import { fetchRestaurants } from './modules/fetchFunctions.js';
 
 const main = () => {
   fetchRestaurants().then((res) => {
@@ -114,10 +112,10 @@ const main = () => {
 
     createCard(restaurants);
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
       let filteredArray = filter.filterByCuisines(
         filter.filterByHours(
-          filter.filterByCapacity(filter.filterByPrice(restaurants))
+          await filter.filterByCapacity(await filter.filterByPrice(restaurants))
         )
       );
       hideRestaurants();

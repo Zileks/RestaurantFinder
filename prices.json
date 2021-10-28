@@ -1,5 +1,5 @@
 [
   { "tooltip": "Cheap", "minPrice": 0, "maxPrice": 100 },
-  { "tooltip": "Moderate", "minPrice": 101, "maxPrice": 200 },
-  { "tooltip": "Expensive", "minPrice": 201, "maxPrice": 50000 }
+  { "tooltip": "Moderate", "minPrice": 150, "maxPrice": 200 },
+  { "tooltip": "Expensive", "minPrice": 300, "maxPrice": 50000 }
 ]
