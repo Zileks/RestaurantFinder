@@ -1,5 +1,10 @@
 import * as find from './restaurantFunctions.js';
 import { chooseCapacityRange, choosePriceRange } from './restaurantRange.js';
+import { createRangeElements } from './htmlelements.js';
+import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
+
+createRangeElements(fetchPrices, 'price');
+createRangeElements(fetchCapacities, 'capacity');
 
 const filterByPrice = async (restaurants) => {
   let filter;
@@ -14,10 +19,9 @@ const filterByPrice = async (restaurants) => {
   if (!filter) {
     return (result = find.findAllRestaurants(restaurants));
   }
-  console.log(filter);
 
   priceRange = await choosePriceRange(filter);
-  console.log(priceRange);
+
   result = find.findRestaurantsByPrice(restaurants, priceRange);
   return result;
 };
@@ -36,6 +40,7 @@ const filterByCapacity = async (i) => {
     return (result = find.findAllRestaurants(i));
   }
   capacityRange = await chooseCapacityRange(filter);
+
   result = find.findRestaurantsByCapacity(i, capacityRange);
 
   return result;

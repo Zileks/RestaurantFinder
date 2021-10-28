@@ -13,5 +13,10 @@
     "tooltip": "Large",
     "minCapacity": 21,
     "maxCapacity": 50000
+  },
+  {
+    "tooltip": "X-Large",
+    "minCapacity": 50,
+    "maxCapacity": 500
   }
 ]

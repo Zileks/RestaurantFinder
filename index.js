@@ -1,6 +1,15 @@
 import * as filter from './modules/filterRestaurants.js';
 import { hideRestaurants } from './modules/restaurantFunctions.js';
-import { fetchRestaurants } from './modules/fetchFunctions.js';
+import {
+  fetchRestaurants,
+  fetchCapacities,
+  fetchPrices,
+} from './modules/fetchFunctions.js';
+import {
+  createCapacityRangeElements,
+  createPriceRangeElements,
+  createRangeElements,
+} from './modules/htmlelements.js';
 
 const main = () => {
   fetchRestaurants().then((res) => {
@@ -9,8 +18,9 @@ const main = () => {
     for (let i = 0; i < data.length; i++) {
       restaurants.push(data[i]);
     }
+    // createRangeElements(fetchPrices, 'price');
+    // createRangeElements(fetchCapacities, 'capacity');
     console.log(restaurants);
-
     const modal = () => {
       const modal = document.getElementById('filter-modal');
 
