@@ -1,26 +1,68 @@
+import { fetchRestaurants } from './modules/fetchFunctions.js';
 import * as filter from './modules/filterRestaurants.js';
+import { kita } from './modules/queryURL.js';
 import { hideRestaurants } from './modules/restaurantFunctions.js';
-import {
-  fetchRestaurants,
-  fetchCapacities,
-  fetchPrices,
-} from './modules/fetchFunctions.js';
-import {
-  createCapacityRangeElements,
-  createPriceRangeElements,
-  createRangeElements,
-} from './modules/htmlelements.js';
 
 const main = () => {
   fetchRestaurants().then((res) => {
-    let restaurants = [];
     let data = res.restaurants;
-    for (let i = 0; i < data.length; i++) {
-      restaurants.push(data[i]);
-    }
-    // createRangeElements(fetchPrices, 'price');
-    // createRangeElements(fetchCapacities, 'capacity');
+    let restaurants = [];
+
+    const createCard = (restaurants) => {
+      const cards = restaurants
+        .map((x) => {
+          return `
+          <div class="card_container">
+            <img src="${x.image}"/>
+            <div class="card_description">
+              <h3>${x.name}</h3>
+              <h4>${x.categories}</h4>
+              <h4>${x.address}</h4>
+            </div>
+          </div>
+        `;
+        })
+        .join('');
+      document.getElementById('rest').insertAdjacentHTML('afterbegin', cards);
+    };
+
+    const restaurantFinder = async (restaurant) => {
+      if (!location.search) {
+        for (let i = 0; i < data.length; i++) {
+          restaurant.push(data[i]);
+        }
+        createCard(restaurant);
+      } else {
+        let filteredArray = filter.filterByCuisines(
+          filter.filterByHours(
+            await filter.filterByCapacity(await filter.filterByPrice(data))
+          )
+        );
+        console.log('price', await filter.filterByPrice(data));
+        console.log('Capacity', await filter.filterByCapacity(data));
+        console.log('Hours', filter.filterByHours(data));
+        console.log('Cuisines', filter.filterByCuisines(data));
+        console.log(data);
+        console.log(filteredArray);
+        for (let i = 0; i < filteredArray.length; i++) {
+          restaurant.push(filteredArray[i]);
+        }
+
+        if (filteredArray.length !== 0) {
+          createCard(restaurant);
+          document.getElementById('nono').innerText = '';
+        } else {
+          createCard(restaurant);
+          document.getElementById('nono').innerText =
+            'There are no restaurants that fits your criteria';
+        }
+        document.getElementById('filter-modal').style.display = 'none';
+      }
+    };
+
+    restaurantFinder(restaurants);
     console.log(restaurants);
+
     const modal = () => {
       const modal = document.getElementById('filter-modal');
 
@@ -102,45 +144,24 @@ const main = () => {
       });
     };
 
-    const createCard = (restaurants) => {
-      const cards = restaurants
-        .map((x) => {
-          return `
-          <div class="card_container">
-            <img src="${x.image}"/>
-            <div class="card_description">
-              <h3>${x.name}</h3>
-              <h4>${x.categories}</h4>
-              <h4>${x.address}</h4>
-            </div>
-          </div>
-        `;
-        })
-        .join('');
-      document.getElementById('rest').insertAdjacentHTML('afterbegin', cards);
-    };
-
-    createCard(restaurants);
-
     const onSubmit = async () => {
-      let filteredArray = filter.filterByCuisines(
-        filter.filterByHours(
-          await filter.filterByCapacity(await filter.filterByPrice(restaurants))
-        )
-      );
-      hideRestaurants();
-      if (filteredArray.length !== 0) {
-        createCard(filteredArray);
-        document.getElementById('nono').innerText = '';
-      } else {
-        createCard(filteredArray);
-        document.getElementById('nono').innerText =
-          'There are no restaurants that fits your criteria';
-      }
-      document.getElementById('filter-modal').style.display = 'none';
+      kita(restaurants);
+
+      // console.log(filteredArray);
+      // hideRestaurants();
+      // if (filteredArray.length !== 0) {
+      //   createCard(filteredArray);
+      //   document.getElementById('nono').innerText = '';
+      // } else {
+      //   createCard(filteredArray);
+      //   document.getElementById('nono').innerText =
+      //     'There are no restaurants that fits your criteria';
+      // }
+      // document.getElementById('filter-modal').style.display = 'none';
     };
 
-    document.getElementById('submit').addEventListener('click', () => {
+    document.getElementById('submit').addEventListener('click', (e) => {
+      e.preventDefault();
       onSubmit(restaurants);
     });
 

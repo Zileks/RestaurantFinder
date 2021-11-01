@@ -2,7 +2,6 @@ import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
 
 function choosePriceRange(price) {
   return fetchPrices().then((result) => {
-    console.log(result);
     return result.find((x) => x.tooltip === price);
     // switch (price) {
     //   case 'Cheap':

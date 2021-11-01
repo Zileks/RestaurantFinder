@@ -6,6 +6,8 @@ import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
 createRangeElements(fetchPrices, 'price');
 createRangeElements(fetchCapacities, 'capacity');
 
+const params = new URLSearchParams(location.search);
+
 const filterByPrice = async (restaurants) => {
   let filter;
   let result = [];
@@ -16,13 +18,14 @@ const filterByPrice = async (restaurants) => {
       filter = price[i].value;
     }
   }
-  if (!filter) {
+
+  if (!params.get('price')) {
     return (result = find.findAllRestaurants(restaurants));
   }
-
-  priceRange = await choosePriceRange(filter);
-
+  priceRange = await choosePriceRange(params.get('price'));
+  console.log(priceRange);
   result = find.findRestaurantsByPrice(restaurants, priceRange);
+  console.log(result);
   return result;
 };
 
@@ -36,13 +39,12 @@ const filterByCapacity = async (i) => {
       filter = capacity[i].value;
     }
   }
-  if (!filter) {
+  if (!params.get('capacity')) {
     return (result = find.findAllRestaurants(i));
   }
-  capacityRange = await chooseCapacityRange(filter);
+  capacityRange = await chooseCapacityRange(params.get('capacity'));
 
   result = find.findRestaurantsByCapacity(i, capacityRange);
-
   return result;
 };
 
@@ -53,17 +55,16 @@ const filterByHours = (i) => {
   let hoursWithZero = 1;
   const hours = document.getElementById('hours-text');
 
-  if (!hours.textContent) {
+  if (!params.get('time')) {
     return (result = find.findAllRestaurants(i));
-  } else if (hours.textContent === 'Open Now') {
+  } else if (params.get('time') === 'OpenNow') {
     return (result = find.findOpenRestaurants(i));
   } else
     filter =
       hours.textContent.length === 4
         ? hours.textContent.slice(0, hoursWithZero)
         : hours.textContent.slice(0, hoursWithoutZero);
-  result = find.findOpenRestaurantsAt(i, filter);
-
+  result = find.findOpenRestaurantsAt(i, params.get('time'));
   return result;
 };
 
@@ -71,6 +72,9 @@ const filterByCuisines = (i) => {
   let filter = [];
   let result = [];
   let allCuisnes = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
+  let separatedParams = params.get('cuisines')
+    ? params.get('cuisines').split(',')
+    : allCuisnes;
   let every = document.getElementById('radio_every');
   let some = document.getElementById('radio_some');
   const cuisines = document.getElementsByName('cuisines');
@@ -80,18 +84,24 @@ const filterByCuisines = (i) => {
       filter.push(cuisines[i].value);
     }
   }
-  if (filter.length === 0) {
-    filter = allCuisnes;
-  }
-  console.log(some.checked, every.checked);
-  if (some.checked) {
-    result = find.findRestaurantsByFood(i, ...filter);
-  }
-  if (every.checked) {
-    result = find.findRestaurantsByFoodEvery(i, ...filter);
-  }
-  console.log(result);
 
+  // if (some.checked) {
+  //   result = find.findRestaurantsByFood(i, ...separatedParams);
+  // }
+  // if (every.checked) {
+  //   result = find.findRestaurantsByFoodEvery(i, ...separatedParams);
+  // }
+  result = find.findRestaurantsByFood(i, ...separatedParams);
+
+  if (params.get('filterBy') === 'any') {
+    result = find.findRestaurantsByFood(i, ...separatedParams);
+  }
+  if (params.get('filterBy') === 'all') {
+    result = find.findRestaurantsByFoodEvery(i, ...separatedParams);
+  }
+
+  // opaopa('cuisines', [...filter]);
+  console.log(result);
   return result;
 };
 

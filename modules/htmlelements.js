@@ -52,7 +52,7 @@ const createCapacityRangeElements = async () => {
 
 const createRangeElements = async (type, lowercaseType) => {
   const range = await type();
-  console.log(range);
+
   createLiElement(range, lowercaseType);
 };
 
