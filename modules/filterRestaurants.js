@@ -8,101 +8,65 @@ createRangeElements(fetchCapacities, 'capacity');
 
 const params = new URLSearchParams(location.search);
 
-const filterByPrice = async (restaurants) => {
-  let filter;
-  let result = [];
-  let priceRange;
-  const price = document.getElementsByName('price');
-  for (let i = 0; i < price.length; i++) {
-    if (price[i].checked) {
-      filter = price[i].value;
-    }
-  }
+const filterByPrice = async (restaurants, price) => {
+  let priceRange = await choosePriceRange(price);
 
-  if (!params.get('price')) {
+  let result = [];
+  if (!price) {
     return (result = find.findAllRestaurants(restaurants));
   }
-  priceRange = await choosePriceRange(params.get('price'));
-  console.log(priceRange);
   result = find.findRestaurantsByPrice(restaurants, priceRange);
-  console.log(result);
   return result;
 };
 
-const filterByCapacity = async (i) => {
-  let filter;
+const filterByCapacity = async (restaurants, capacity) => {
+  let capacityRange = await chooseCapacityRange(capacity);
   let result = [];
-  let capacityRange;
-  const capacity = document.getElementsByName('capacity');
-  for (let i = 0; i < capacity.length; i++) {
-    if (capacity[i].checked) {
-      filter = capacity[i].value;
-    }
+  if (!capacity) {
+    return (result = find.findAllRestaurants(restaurants));
   }
-  if (!params.get('capacity')) {
-    return (result = find.findAllRestaurants(i));
-  }
-  capacityRange = await chooseCapacityRange(params.get('capacity'));
-
-  result = find.findRestaurantsByCapacity(i, capacityRange);
+  result = find.findRestaurantsByCapacity(restaurants, capacityRange);
   return result;
 };
 
-const filterByHours = (i) => {
-  let filter;
+const filterByHours = (i, time) => {
   let result = [];
-  let hoursWithoutZero = 2;
-  let hoursWithZero = 1;
-  const hours = document.getElementById('hours-text');
-
-  if (!params.get('time')) {
+  if (!time) {
     return (result = find.findAllRestaurants(i));
-  } else if (params.get('time') === 'OpenNow') {
+  } else if (time === 'OpenNow') {
     return (result = find.findOpenRestaurants(i));
-  } else
-    filter =
-      hours.textContent.length === 4
-        ? hours.textContent.slice(0, hoursWithZero)
-        : hours.textContent.slice(0, hoursWithoutZero);
-  result = find.findOpenRestaurantsAt(i, params.get('time'));
+  } else result = find.findOpenRestaurantsAt(i, time);
   return result;
 };
 
-const filterByCuisines = (i) => {
-  let filter = [];
+const filterByCuisines = (i, cuisines, filterBy) => {
+  // let filter = [];
   let result = [];
-  let allCuisnes = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
-  let separatedParams = params.get('cuisines')
-    ? params.get('cuisines').split(',')
-    : allCuisnes;
-  let every = document.getElementById('radio_every');
-  let some = document.getElementById('radio_some');
-  const cuisines = document.getElementsByName('cuisines');
-
-  for (let i = 0; i < cuisines.length; i++) {
-    if (cuisines[i].checked) {
-      filter.push(cuisines[i].value);
+  let allCuisines = ['Serbian', 'Vege', 'Italian', 'Mexican', 'Chinese'];
+  console.log([cuisines]);
+  if (!cuisines && !filterBy) {
+    result = find.findRestaurantsByFood(i, ...allCuisines);
+    console.log(result);
+  } else {
+    if (filterBy === 'any') {
+      result = find.findRestaurantsByFood(i, ...cuisines.split(','));
+    }
+    if (filterBy === 'all') {
+      result = find.findRestaurantsByFoodEvery(i, ...cuisines.split(','));
     }
   }
-
-  // if (some.checked) {
-  //   result = find.findRestaurantsByFood(i, ...separatedParams);
-  // }
-  // if (every.checked) {
-  //   result = find.findRestaurantsByFoodEvery(i, ...separatedParams);
-  // }
-  result = find.findRestaurantsByFood(i, ...separatedParams);
-
-  if (params.get('filterBy') === 'any') {
-    result = find.findRestaurantsByFood(i, ...separatedParams);
-  }
-  if (params.get('filterBy') === 'all') {
-    result = find.findRestaurantsByFoodEvery(i, ...separatedParams);
-  }
-
-  // opaopa('cuisines', [...filter]);
-  console.log(result);
   return result;
+};
+
+const modalCheck = () => {
+  if (params.get('capacity')) {
+    const capacity = document.getElementsByName('capacity');
+    for (let i = 0; i < capacity.length; i++) {
+      if (capacity[i].value === params.get('capacity')) {
+        capacity[i].checked = true;
+      }
+    }
+  }
 };
 
 export { filterByPrice, filterByCapacity, filterByCuisines, filterByHours };

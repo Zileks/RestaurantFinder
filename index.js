@@ -1,8 +1,9 @@
 import { fetchRestaurants } from './modules/fetchFunctions.js';
 import * as filter from './modules/filterRestaurants.js';
-import { kita } from './modules/queryURL.js';
+import { writeLocation } from './modules/queryURL.js';
 import { hideRestaurants } from './modules/restaurantFunctions.js';
 
+const params = new URLSearchParams(location.search);
 const main = () => {
   fetchRestaurants().then((res) => {
     let data = res.restaurants;
@@ -35,15 +36,15 @@ const main = () => {
       } else {
         let filteredArray = filter.filterByCuisines(
           filter.filterByHours(
-            await filter.filterByCapacity(await filter.filterByPrice(data))
-          )
+            await filter.filterByCapacity(
+              await filter.filterByPrice(data, params.get('price')),
+              params.get('capacity')
+            ),
+            params.get('time')
+          ),
+          params.get('cuisines'),
+          params.get('filterBy')
         );
-        console.log('price', await filter.filterByPrice(data));
-        console.log('Capacity', await filter.filterByCapacity(data));
-        console.log('Hours', filter.filterByHours(data));
-        console.log('Cuisines', filter.filterByCuisines(data));
-        console.log(data);
-        console.log(filteredArray);
         for (let i = 0; i < filteredArray.length; i++) {
           restaurant.push(filteredArray[i]);
         }
@@ -145,19 +146,7 @@ const main = () => {
     };
 
     const onSubmit = async () => {
-      kita(restaurants);
-
-      // console.log(filteredArray);
-      // hideRestaurants();
-      // if (filteredArray.length !== 0) {
-      //   createCard(filteredArray);
-      //   document.getElementById('nono').innerText = '';
-      // } else {
-      //   createCard(filteredArray);
-      //   document.getElementById('nono').innerText =
-      //     'There are no restaurants that fits your criteria';
-      // }
-      // document.getElementById('filter-modal').style.display = 'none';
+      writeLocation();
     };
 
     document.getElementById('submit').addEventListener('click', (e) => {
@@ -165,39 +154,37 @@ const main = () => {
       onSubmit(restaurants);
     });
 
-    const clearAll = () => {
-      document.getElementById('clear').addEventListener('click', () => {
-        let result = '';
-        document.getElementById('price-text').innerText = result;
-        const price = document.getElementsByName('price');
-        for (let i = 0; i < price.length; i++) {
-          if (price[i].checked) {
-            price[i].checked = false;
-          }
+    document.getElementById('clear').addEventListener('click', () => {
+      let result = '';
+      document.getElementById('price-text').innerText = result;
+      const price = document.getElementsByName('price');
+      for (let i = 0; i < price.length; i++) {
+        if (price[i].checked) {
+          price[i].checked = false;
         }
-        document.getElementById('capacity-text').innerText = result;
-        const capacity = document.getElementsByName('capacity');
-        for (let i = 0; i < capacity.length; i++) {
-          if (capacity[i].checked) {
-            capacity[i].checked = false;
-          }
+      }
+      document.getElementById('capacity-text').innerText = result;
+      const capacity = document.getElementsByName('capacity');
+      for (let i = 0; i < capacity.length; i++) {
+        if (capacity[i].checked) {
+          capacity[i].checked = false;
         }
-        document.getElementById('hours-text').innerText = result;
-        document.getElementById('cuisines-text').innerText = result;
-        document.getElementById('cuisines-allorany').innerText = result;
-        document.getElementById('radio_every').checked = false;
-        document.getElementById('radio_some').checked = true;
-        document.getElementById('nono').innerText = '';
-        let cuisines = document.getElementsByName('cuisines');
-        for (let i = 0; i < cuisines.length; i++) {
-          if (cuisines[i].checked) cuisines[i].checked = false;
-        }
-      });
-    };
+      }
+      document.getElementById('hours-text').innerText = result;
+      document.getElementById('cuisines-text').innerText = result;
+      document.getElementById('cuisines-allorany').innerText = result;
+      document.getElementById('radio_every').checked = false;
+      document.getElementById('radio_some').checked = true;
+      document.getElementById('nono').innerText = '';
+      let cuisines = document.getElementsByName('cuisines');
+      for (let i = 0; i < cuisines.length; i++) {
+        if (cuisines[i].checked) cuisines[i].checked = false;
+      }
+    });
 
     const filterText = () => {
       let result;
-      clearAll();
+
       document.getElementById('price-form').addEventListener('change', (e) => {
         result = e.target.value;
         document.getElementById('price-text').innerText = result;
@@ -245,7 +232,6 @@ const main = () => {
             : (document.getElementById('cuisines-text').innerText = '');
         });
     };
-
     filterText();
     stylingFunction();
     modal();
