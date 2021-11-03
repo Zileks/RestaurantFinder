@@ -85,4 +85,11 @@ const writeLocation = () => {
   location = `index.html?${query}`;
 };
 
-export { writeLocation };
+export {
+  writeLocation,
+  getPrice,
+  getHours,
+  getAllorAny,
+  getCapacity,
+  getCuisnes,
+};

@@ -1,14 +1,22 @@
 import { fetchRestaurants } from './modules/fetchFunctions.js';
 import * as filter from './modules/filterRestaurants.js';
 import { writeLocation } from './modules/queryURL.js';
-import { hideRestaurants } from './modules/restaurantFunctions.js';
+import {
+  setPriceByQuery,
+  setCapacityByQuery,
+  setTimeByQuery,
+  setCuisinesByQuery,
+} from './modules/modal.js';
 
 const params = new URLSearchParams(location.search);
 const main = () => {
   fetchRestaurants().then((res) => {
     let data = res.restaurants;
     let restaurants = [];
-
+    setPriceByQuery();
+    setCapacityByQuery();
+    setTimeByQuery();
+    setCuisinesByQuery();
     const createCard = (restaurants) => {
       const cards = restaurants
         .map((x) => {

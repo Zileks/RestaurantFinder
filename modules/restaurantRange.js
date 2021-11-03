@@ -1,6 +1,6 @@
 import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
 
-function choosePriceRange(price) {
+function getPriceRange(price) {
   return fetchPrices().then((result) => {
     return result.find((x) => x.tooltip === price);
     // switch (price) {
@@ -17,7 +17,7 @@ function choosePriceRange(price) {
   });
 }
 
-function chooseCapacityRange(capacity) {
+function getCapacityRange(capacity) {
   return fetchCapacities().then((result) => {
     return result.find((x) => x.tooltip === capacity);
     // switch (capacity) {
@@ -34,4 +34,4 @@ function chooseCapacityRange(capacity) {
   });
 }
 
-export { chooseCapacityRange, choosePriceRange };
+export { getCapacityRange, getPriceRange };

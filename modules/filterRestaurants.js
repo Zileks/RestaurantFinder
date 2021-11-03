@@ -1,5 +1,5 @@
 import * as find from './restaurantFunctions.js';
-import { chooseCapacityRange, choosePriceRange } from './restaurantRange.js';
+import { getPriceRange, getCapacityRange } from './restaurantRange.js';
 import { createRangeElements } from './htmlelements.js';
 import { fetchCapacities, fetchPrices } from './fetchFunctions.js';
 
@@ -9,8 +9,7 @@ createRangeElements(fetchCapacities, 'capacity');
 const params = new URLSearchParams(location.search);
 
 const filterByPrice = async (restaurants, price) => {
-  let priceRange = await choosePriceRange(price);
-
+  let priceRange = await getPriceRange(price);
   let result = [];
   if (!price) {
     return (result = find.findAllRestaurants(restaurants));
@@ -20,7 +19,7 @@ const filterByPrice = async (restaurants, price) => {
 };
 
 const filterByCapacity = async (restaurants, capacity) => {
-  let capacityRange = await chooseCapacityRange(capacity);
+  let capacityRange = await getCapacityRange(capacity);
   let result = [];
   if (!capacity) {
     return (result = find.findAllRestaurants(restaurants));
